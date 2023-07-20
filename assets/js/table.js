@@ -42,7 +42,7 @@ $(document).ready(function () {
         var endDate = new Date(item.end_date);
         var currentDate = new Date();
         var timeDiff = Math.ceil((endDate - currentDate) / (1000 * 60 * 60 * 24));
-        row.append($('<td>').text(timeDiff));
+        row.append($('<td class="text-sm">').text(timeDiff));
         var statusSpan = $('<span>');
         var contractStatus;
         if (timeDiff <= 0) {
