@@ -1229,9 +1229,6 @@
     <script src="assets/js/Chart.min.js"></script>
     <script src="assets/js/dynamic-pie-chart.js"></script>
     <script src="assets/js/moment.min.js"></script>
-    <script src="assets/js/jvectormap.min.js"></script>
-    <script src="assets/js/world-merc.js"></script>
-    <script src="assets/js/jquery-jvectormap-africa-mill.js"></script>
     <script src="assets/js/polyfill.js"></script>
     <script src="assets/js/main.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -1240,29 +1237,84 @@
     <script>
       // Initialize the map
         var map = L.map('map').setView([-1.9403, 29.8739], 9); // Set the initial center and zoom level
-
+        var totalSalesByDistrict = {}; // Object to store total sales by district
         // Add the OpenStreetMap tiles to the map
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
           attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         }).addTo(map);
+        // Function to calculate total sales by district
+          function calculateTotalSalesByDistrict(jsonData) {
+            jsonData.forEach(function(data) {
+              var district = data.district.trim();
 
-        // Example: Add markers to the map directly in your JavaScript code
-        var markers = [
-          { lat: -1.8847, lng: 30.13141 }, // Gasabo
-          { lat: -2.00391, lng: 30.14696 },  // Kicukiro
-          { lat: -1.99095, lng: 30.02127 }  // Nyarugenge
-        ];
+              if (!totalSalesByDistrict[district]) {
+                totalSalesByDistrict[district] = 0;
+              }
 
+              totalSalesByDistrict[district] += parseInt(data.qty) * parseFloat(data.price);
+            });
+          }
+          
+        
         // Function to add markers to the map
         function addMarkers() {
           markers.forEach(function(marker) {
-            L.marker([marker.lat, marker.lng]).addTo(map);
+            var district = marker.district;
+            var totalSales = totalSalesByDistrict[district] || 0;
+
+            var popupContent = '<b>' + district + '</b><br>' + 'Total Sales: RWF ' + totalSales;
+            var customPopup = L.popup().setContent(popupContent);
+
+            L.marker([marker.lat, marker.lng]).addTo(map).bindPopup(customPopup);
           });
         }
-
-        // Call the function to add markers to the map
-        addMarkers();
-
+        // Function to load JSON data from a file
+        function loadJSONData(filePath) {
+          fetch(filePath)
+            .then(response => response.json())
+            .then(jsonData => {
+              calculateTotalSalesByDistrict(jsonData);
+              addMarkers();
+            })
+            .catch(error => console.error('Error loading JSON data:', error));
+        }
+        // Your markers array
+          var markers = [
+          { lat: -1.9539, lng: 30.0881, district: "Gasabo" },
+          { lat: -1.9517, lng: 30.0584, district: "Nyarugenge" },
+          { lat: -1.9637, lng: 30.1578, district: "Kicukiro" },
+          { lat: -1.9633, lng: 30.1408, district: "Bugesera" },
+          { lat: -1.6703, lng: 30.4317, district: "Gatsibo" },
+          { lat: -2.0614, lng: 29.8417, district: "Kamonyi" },
+          { lat: -1.8657, lng: 30.6229, district: "Kayonza" },
+          { lat: -2.1751, lng: 29.7531, district: "Ngoma" },
+          { lat: -1.7356, lng: 30.4394, district: "Nyagatare" },
+          { lat: -2.4981, lng: 29.575, district: "Nyamagabe" },
+          { lat: -2.7772, lng: 29.7503, district: "Nyanza" },
+          { lat: -2.6846, lng: 30.4878, district: "Nyaruguru" },
+          { lat: -1.7301, lng: 30.0444, district: "Ruhango" },
+          { lat: -1.388, lng: 29.8501, district: "Burera" },
+          { lat: -1.7335, lng: 29.8547, district: "Gakenke" },
+          { lat: -1.6943, lng: 29.5238, district: "Gicumbi" },
+          { lat: -1.5086, lng: 29.6361, district: "Musanze" },
+          { lat: -1.9294, lng: 29.6323, district: "Rulindo" },
+          { lat: -2.1602, lng: 29.364, district: "Karongi" },
+          { lat: -2.0753, lng: 29.5542, district: "Ngororero" },
+          { lat: -2.257, lng: 29.4212, district: "Nyabihu" },
+          { lat: -2.3439, lng: 29.1352, district: "Nyamasheke" },
+          { lat: -1.9521, lng: 29.6028, district: "Rubavu" },
+          { lat: -1.9678, lng: 29.8756, district: "Rusizi" },
+          { lat: -2.4051, lng: 29.2859, district: "Rutsiro" },
+          { lat: -2.0426, lng: 29.5636, district: "Karamea" },
+          { lat: -2.5538, lng: 30.1093, district: "Kirehe" },
+          { lat: -2.1643, lng: 29.8661, district: "Muhanga" },
+          { lat: -2.3598, lng: 29.7445, district: "Nyanza" },
+          { lat: -2.0749, lng: 29.3558, district: "Rwamagana" }
+            // Add more markers as needed for other districts in Rwanda
+          ];
+        // Call the function and pass the JSON file path here
+        loadJSONData('data.json');
+      
       // =========== chart one start
       const ctx1 = document.getElementById("Chart1").getContext("2d");
       const chart1 = new Chart(ctx1, {
