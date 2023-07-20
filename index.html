@@ -1259,15 +1259,31 @@
         // Function to add markers to the map
         function addMarkers() {
           markers.forEach(function(marker) {
-            var district = marker.district;
-            var totalSales = totalSalesByDistrict[district] || 0;
+        var district = marker.district;
+        var totalSales = totalSalesByDistrict[district] || 0;
 
-            var popupContent = '<b>' + district + '</b><br>' + 'Total Sales: RWF ' + totalSales;
-            var customPopup = L.popup().setContent(popupContent);
+        var popupContent = '<b>' + district + '</b><br>' + 'Total Sales: RWF ' + totalSales;
+        var customPopup = L.popup().setContent(popupContent);
 
-            L.marker([marker.lat, marker.lng]).addTo(map).bindPopup(customPopup);
-          });
+        var customIcon = L.icon({
+          iconUrl: 'pin.png', // Replace with the actual path to your icon image
+          iconSize: [32, 32], // Adjust the size of the icon if needed
+        });
+
+        var marker = L.marker([marker.lat, marker.lng], { icon: customIcon }).addTo(map);
+        marker.bindPopup(customPopup);
+
+        marker.on('mouseover', function(e) {
+          this.openPopup();
+        });
+
+        marker.on('mouseout', function(e) {
+          this.closePopup();
+        });
+      });
+          
         }
+        
         // Function to load JSON data from a file
         function loadJSONData(filePath) {
           fetch(filePath)
