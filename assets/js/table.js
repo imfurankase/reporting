@@ -67,7 +67,7 @@ $(document).ready(function () {
         statusSpan.text(contractStatus);
 
         // Create a new table data (td) element
-        var tdElement = $('<td>');
+        var tdElement = $('<td class="text-sm">');
 
         // Append the statusSpan to the tdElement
         tdElement.append(statusSpan);
@@ -76,7 +76,7 @@ $(document).ready(function () {
         // For example, if you want to append it to a row:
         row.append(tdElement);
   
-        row.append($('<td>').text(item.account_manager));
+        row.append($('<td class="text-sm">').text(item.account_manager));
   
         tableBody.append(row);
       }
