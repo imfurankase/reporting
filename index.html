@@ -1253,6 +1253,7 @@
     <script src="assets/js/moment.min.js"></script>
     <script src="assets/js/jvectormap.min.js"></script>
     <script src="assets/js/world-merc.js"></script>
+    <script src="assets/js/jquery-jvectormap-africa-mill.js"></script>
     <script src="assets/js/polyfill.js"></script>
     <script src="assets/js/main.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -1261,11 +1262,12 @@
     <script>
       // ======== jvectormap activation
       var markers = [
-        { name: "Egypt", coords: [26.8206, 30.8025] },
-        { name: "Russia", coords: [61.524, 105.3188] },
-        { name: "Canada", coords: [56.1304, -106.3468] },
-        { name: "Greenland", coords: [71.7069, -42.6043] },
-        { name: "Brazil", coords: [-14.235, -51.9253] },
+        { name: "Gasabo", coords: [-1.8847, 30.13141] },
+        { name: "Nyarugenge", coords: [-1.99095, 30.02127] },
+        { name: "Kicukiro", coords: [-2.00391, 30.14696] },
+        { name: "Rwamagana", coords: [-1.97281, 30.35428] },
+        { name: "Rusizi", coords: [-2.4846, 28.9075] },
+        { name: "Central Africa", coords: [6.6194073, 20.9367017] },
       ];
 
       var jvm = new jsVectorMap({
@@ -1289,7 +1291,7 @@
         selectedMarkers: markers.map((marker, index) => {
           var name = marker.name;
 
-          if (name === "Russia" || name === "Brazil") {
+          if (name === "Gasabo" || name === "Nyarugenge") {
             return index;
           }
         }),
