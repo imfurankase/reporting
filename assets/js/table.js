@@ -253,6 +253,40 @@ $(document).ready(function () {
         chart4.update();
     }
   
+    // Function to filter the table based on the search keyword
+  function searchTable() {
+    var searchKeyword = $('#search-input').val().toLowerCase();
+
+    // Filter the jsonData based on the search keyword
+    filteredData = jsonData.filter(function (item) {
+      // Modify the properties you want to search on (e.g., item.district, item.profile, etc.)
+      return (
+        item.district.toLowerCase().includes(searchKeyword) ||
+        item.bp_name.toLowerCase().includes(searchKeyword) ||
+        item.bp_code.toLowerCase().includes(searchKeyword) ||
+        item.supplier.toLowerCase().includes(searchKeyword) ||
+        item.product.toLowerCase().includes(searchKeyword) ||
+        item.item_description.toLowerCase().includes(searchKeyword) ||
+        item.profile.toLowerCase().includes(searchKeyword) ||
+        item.customer_category.toLowerCase().includes(searchKeyword) ||
+        item.sector.toLowerCase().includes(searchKeyword) ||
+        item.sales_month.toLowerCase().includes(searchKeyword) ||
+        item.account_manager.toLowerCase().includes(searchKeyword)
+      );
+    });
+
+    currentPage = 1; // Reset currentPage to 1 after filtering
+    updatePaginationButtons();
+    populateTable(filteredData, currentPage); // Update the table with the filtered data
+    calculateAccountManagerSales();
+    updateChart(filteredData); // Pass the filtered data to the updateChart function
+  }
+
+  // Example usage of an input event listener for the search input field
+  $('#search-input').on('input', function () {
+    searchTable();
+  });
+
     // Example usage of a filter event listener for a dropdown
     $('.select-style-1 select').on('change', function () {
       filterTable();
