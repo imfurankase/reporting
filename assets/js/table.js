@@ -19,25 +19,25 @@ $(document).ready(function () {
         var item = data[i];
         var row = $('<tr>');
         // Added table data (columns) here based on my JSON structure
-        row.append($('<td>').text(item.id));
-        row.append($('<td>').text(item.bp_code));
-        row.append($('<td>').text(item.bp_name));
-        row.append($('<td>').text(item.district));
-        row.append($('<td>').text(item.profile));
-        row.append($('<td>').text(item.sector));
-        row.append($('<td>').text(item.customer_category));
-        row.append($('<td>').text(item.supplier));
-        row.append($('<td>').text(item.product));
-        row.append($('<td>').text(item.item_description));
-        row.append($('<td>').text(item.qty));
-        row.append($('<td>').text(item.price));
+        row.append($('<td class="text-sm">').text(item.id));
+        row.append($('<td class="text-sm">').text(item.bp_code));
+        row.append($('<td class="text-sm">').text(item.bp_name));
+        row.append($('<td class="text-sm">').text(item.district));
+        row.append($('<td class="text-sm">').text(item.profile));
+        row.append($('<td class="text-sm">').text(item.sector));
+        row.append($('<td class="text-sm">').text(item.customer_category));
+        row.append($('<td class="text-sm">').text(item.supplier));
+        row.append($('<td class="text-sm">').text(item.product));
+        row.append($('<td class="text-sm">').text(item.item_description));
+        row.append($('<td class="text-sm">').text(item.qty));
+        row.append($('<td class="text-sm">').text(item.price));
   
         var totalSales = item.qty * item.price;
-        row.append($('<td>').text(totalSales));
+        row.append($('<td class="text-sm">').text(totalSales));
   
         // Reorder the columns to display correctly
-        row.append($('<td>').text(item.sales_month));
-        row.append($('<td>').text(item.end_date));
+        row.append($('<td class="text-sm">').text(item.sales_month));
+        row.append($('<td class="text-sm">').text(item.end_date));
   
         var endDate = new Date(item.end_date);
         var currentDate = new Date();
